@@ -9,7 +9,7 @@ class AgentInterface(abc.ABC):
         pass
     
     @abc.abstractmethod
-    def run(self, world) -> None:
+    def step(self, world) -> None:
         pass
     
     @abc.abstractmethod
@@ -18,3 +18,4 @@ class AgentInterface(abc.ABC):
 
     def register_message_handler(self, message_handler: MessageHandler):
         self.message_handler = message_handler
+

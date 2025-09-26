@@ -1,13 +1,18 @@
 from agents.langchain_agent import LangchainAgent
+from environment.BlockchainWorld import BlockchainWorld
+from environment.FakeChain import FakeChain
 from environment.message_passing import MessageHandler
 from environment.world import World
 
 
 def run_simulation():
     # Currently sync, will later be async
-    agent1 = LangchainAgent(agent_id="agent1")
-    agent2 = LangchainAgent(agent_id="agent2")
-    w = World(message_handler=MessageHandler())
+    chain = FakeChain()
+
+    w = BlockchainWorld(message_handler=MessageHandler(), chain=chain)
+    world_tools = w.get_tools()
+    agent1 = LangchainAgent(agent_id="agent1", tools=world_tools)
+    agent2 = LangchainAgent(agent_id="agent2", tools=world_tools)
     w.register_agents([agent1, agent2])
     w.run(num_steps=1)
 
